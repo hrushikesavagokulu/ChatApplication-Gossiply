@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title><%= title %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #1a1a1a;
+      --text: #ff8080;
+      --box: #2a2a2a;
+      --border: #444;
+      --link-color: #80bfff;
+      --link-hover: #66aaff;
+    }
+
+    body {
+      margin: 0;
+      padding: 50px 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      text-align: center;
+    }
+
+    .error-box {
+      background-color: var(--box);
+      border: 1px solid var(--border);
+      padding: 24px;
+      display: inline-block;
+      border-radius: 10px;
+      max-width: 500px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 1.6rem;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 8px 0;
+    }
+
+    a {
+      color: var(--link-color);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    a:hover {
+      color: var(--link-hover);
+    }
+
+    .suggestion-link {
+      font-size: 1rem;
+      background: transparent;
+      border: 1px solid var(--link-color);
+      padding: 6px 12px;
+      border-radius: 6px;
+      display: inline-block;
+      margin: 6px;
+      cursor: pointer;
+    }
+
+    .suggestion-link:hover {
+      background-color: var(--link-color);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="error-box">
+    <h2>⚠️ Error</h2>
+    <p><%= error %></p>
+
+    <% if (suggestions && suggestions.length > 0) { %>
+      <p>Try one of these available usernames:</p>
+      <ol>
+        <% suggestions.forEach(s => { %>
+          <li><%= s %></li>
+
+        <% }) %>
+      </ol>
+    <% } %>
+
+    <a href="/profile">⬅️ Back to Profile</a>
+  </div>
+
+  <script>
+    function applySuggestion(name) {
+      // Optionally store the suggestion
+      localStorage.setItem("suggestedUsername", name);
+      window.location.href = "/profile?suggested=" + encodeURIComponent(name);
+    }
+  </script>
+</body>
+</html>

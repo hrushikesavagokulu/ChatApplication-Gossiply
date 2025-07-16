@@ -1,0 +1,24 @@
+body {
+    font-family: sans-serif;
+    background: #f8f9fa;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+input[type="text"] {
+    padding: 8px;
+    width: 300px;
+    font-size: 1em;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+li {
+    padding: 5px 0;
+}

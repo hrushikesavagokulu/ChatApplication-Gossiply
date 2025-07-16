@@ -1,0 +1,1383 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f7f9;
+    color: #333;
+    font-size: 13px;
+    /* Global reduced font size */
+}
+
+nav {
+    font-size: 1rem;
+    /* Keep nav bar font size large */
+}
+
+/* --- Container Layout --- */
+.container {
+    display: flex;
+    height: 100vh;
+    max-width: 1300px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+/* --- Contacts Panel --- */
+.contacts {
+    width: 280px;
+    background: #fff;
+    border-right: 1px solid #ddd;
+    padding: 15px;
+    overflow-y: auto;
+    font-size: 13px;
+}
+
+.contacts h2 {
+    font-size: 1rem;
+    margin-bottom: 12px;
+}
+
+.contacts ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.contact {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 6px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.2s;
+}
+
+.contact:hover {
+    background-color: #f1f1f1;
+}
+
+.contact img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+}
+
+.contact strong {
+    flex-grow: 1;
+}
+
+.view-profile-btn {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.unread-dot {
+    position: absolute;
+    top: 8px;
+    left: 30px;
+    width: 8px;
+    height: 8px;
+    background-color: #28a745;
+    border-radius: 50%;
+    display: none;
+}
+
+.contact.unread .unread-dot {
+    display: block;
+}
+
+/* --- Chat Room --- */
+.chat-room {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background: #f9fbfc;
+    font-size: 13px;
+}
+
+/* --- Chat Header --- */
+.chat-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.chat-header img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+}
+
+.chat-header h2 {
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* --- Messages --- */
+.messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.message {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 10px;
+}
+
+.message.me {
+    flex-direction: row-reverse;
+    text-align: right;
+}
+
+.message img.message-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin: 0 8px;
+}
+
+.message-content {
+    max-width: 65%;
+    background: #e1f0ff;
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.message.friend .message-content {
+    background: #dcd2ff;
+}
+
+.message.me .message-content {
+    background: #c2f0c2;
+}
+
+.message-time {
+    font-size: 0.7rem;
+    color: #666;
+    margin-top: 2px;
+}
+
+/* --- Input Section --- */
+.chat-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+}
+
+.chat-input textarea {
+    flex: 1;
+    resize: none;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 13px;
+    height: 50px;
+}
+
+#sendBtn,
+#uploadBtn {
+    padding: 8px 14px;
+    font-size: 13px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#sendBtn {
+    background: #28a745;
+    color: white;
+}
+
+#uploadBtn {
+    background: #007bff;
+    color: white;
+}
+
+#sendBtn:hover:not(:disabled),
+#uploadBtn:hover {
+    opacity: 0.85;
+}
+
+#sendBtn:disabled {
+    background: #999;
+    cursor: not-allowed;
+}
+
+/* --- Emoji Picker --- */
+emoji-picker {
+    max-width: 280px;
+    z-index: 10;
+    position: absolute;
+    bottom: 60px;
+    right: 60px;
+    display: none;
+}
+
+/* --- Dark Mode --- */
+body.dark-mode {
+    background-color: #121212;
+    color: #eee;
+}
+
+body.dark-mode .contacts,
+body.dark-mode .chat-room {
+    background-color: #1e1e1e;
+    color: #ddd;
+}
+
+body.dark-mode .messages {
+    background-color: #222;
+    border-color: #444;
+}
+
+body.dark-mode .message-content {
+    background-color: #333;
+    color: #eee;
+}
+
+body.dark-mode .message.friend .message-content {
+    background-color: #444;
+}
+
+body.dark-mode .message.me .message-content {
+    background-color: #2e7d32;
+}
+
+body.dark-mode button {
+    background-color: #444;
+    color: #eee;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* --- Animations --- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        max-width: 100%;
+    }
+
+    .contacts {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .chat-input {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #sendBtn,
+    #uploadBtn {
+        width: 100%;
+    }
+}
+
+
+
+
+
+===========================================================================================================
+=============================================================================================================
+============================================================================================================
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chat</title>
+  <link rel="stylesheet" href="/public/css/home.css" />
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css"
+/>
+  <style>
+  :root {
+  --primary: #007bff;
+  --secondary: #f6ec5e;
+  --bg-light: #f4f7f9;
+  --bg-dark: #121212;
+  --text-light: #eee;
+  --text-dark: #222;
+  --card-light: #fff;
+  --card-dark: #1f1f1f;
+  --hover-bg: #f0f0f0;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100%;
+  height:90%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #88649e;
+  color: var(--text-dark);
+  transition: all 0.3s ease;
+}
+
+body.dark-mode {
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  padding: 0.8rem 1.5rem;
+  margin: 8px;
+  border-radius: 6px;
+  background-color: #875b1a;
+  border-bottom: 1px solid #ccc;
+  gap: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-left {
+  flex: 1;
+}
+
+.nav-right {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+body.dark-mode nav {
+  background-color: var(--card-dark);
+  border-color: #444;
+}
+
+nav a,
+nav button {
+  color: #f5f2f2;
+  text-decoration: none;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+nav a:hover,
+nav button:hover {
+  background-color: #442605;
+}
+
+body.dark-mode nav a,
+body.dark-mode nav button {
+  color: var(--text-light);
+}
+
+body.dark-mode nav a:hover,
+body.dark-mode nav button:hover {
+  background-color: #2a2a2a;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 60px);
+  height:96%;
+}
+
+.contacts {
+  width: 30%;
+  max-height: calc(100vh - 60px);
+  background-color: #899c99;
+  border-right: 1px solid #ccc;
+  overflow-y: auto;
+  padding: 1rem;
+  margin-left: 8%;
+  margin-top: 10px;
+  margin-right: 2%;
+  border-radius: 10px 0 0 10px;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+  scrollbar-width: thin;
+  scrollbar-color: #bbb transparent;
+  
+}
+
+.contacts::-webkit-scrollbar {
+  width: 6px;
+}
+
+.contacts::-webkit-scrollbar-thumb {
+  background-color: #bbb;
+  border-radius: 6px;
+}
+
+body.dark-mode .contacts {
+  background-color: var(--card-dark);
+  border-color: #444;
+}
+
+.contacts h2 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: var(--primary);
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+}
+
+.contacts ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.contact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 8px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+  background-color: #e1ca9b;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.contact:hover {
+  background-color: #eaeaea;
+  transform: translateY(-1px);
+}
+
+body.dark-mode .contact {
+  background-color: #2a2a2a;
+}
+
+body.dark-mode .contact:hover {
+  background-color: #3a3a3a;
+}
+
+.contact.unread strong {
+  color: var(--secondary);
+  font-weight: bold;
+}
+
+.unread-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--secondary);
+  border-radius: 50%;
+  margin-left: 5px;
+  display: inline-block;
+}
+
+.contact img {
+  border-radius: 50%;
+  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+
+.contact strong {
+  flex-grow: 1;
+  margin-left: 10px;
+}
+
+.chat-room {
+  flex: 1;
+  display: flex;
+  width:60%;
+  
+  flex-direction: column;
+  background-color: var(--bg-light);
+  padding: 1rem;
+}
+
+body.dark-mode .chat-room {
+  background-color: #181818;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  background: #4a4953;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: small;
+}
+
+body.dark-mode .messages {
+  background-color: #272727;
+}
+
+.message {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 12px;
+}
+
+.message.me {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.message-content {
+  max-width: 65%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: var(--primary);
+  color: #000000;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.message.me .message-content {
+  background: var(--secondary);
+}
+
+.message-time {
+  font-size: 0.7rem;
+  color: #fdfafa;
+  margin-top: 4px;
+}
+
+.chat-input {
+  display: flex;
+  gap: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #c11313;
+}
+
+textarea {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  resize: none;
+}
+
+button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+#uploadBtn {
+  background-color: var(--primary);
+  color: white;
+}
+
+#sendBtn {
+  background-color: var(--secondary);
+  color: black;
+}
+
+#sendBtn:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+#emojiBtn {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.view-profile-btn {
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.view-profile-btn:hover {
+  background-color: #0056b3;
+}
+
+    .emoji-animation {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 30px auto 10px;
+  animation: floatEmojis 2s ease-in-out infinite;
+  font-size: 2.2rem;
+}
+
+
+emoji-picker {
+  position: absolute;
+  bottom: 60px;
+  right: 60px;
+  z-index: 999;
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .contacts {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #706f6f;
+    border-radius: 0;
+  }
+
+  .chat-input {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #sendBtn,
+  #uploadBtn {
+    width: 100%;
+  }
+}
+
+/* Chat Placeholder View with Emoji Background */
+.chat-room {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #874258;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+body.dark-mode .chat-room {
+  background: linear-gradient(to top left, #0a0a0a, #131313, #1f1f1f, #111111, #0a0a0a);
+}
+
+
+
+.chat-placeholder {
+  z-index: 2;
+  margin: auto;
+  text-align: center;
+  color: #f1f5f9;
+  background: rgba(44, 46, 49, 0.6);
+  padding: 30px 40px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.chat-placeholder h2 {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+.chat-placeholder p {
+  font-size: 1rem;
+  color: #cbd5e1;
+}
+
+/* Emoji Floating Animation Background */
+.emoji-float-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.emoji-float {
+  position: absolute;
+  top: 100vh;
+  opacity: 0.75;
+  pointer-events: none;
+  animation-name: emojiUp;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  z-index: 1;
+}
+
+@keyframes emojiUp {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-120vh);
+    opacity: 0;
+  }
+}
+
+.unread-count {
+  background: crimson;
+  color: white;
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 12px;
+  margin-left: 8px;
+}
+
+
+@media (max-width: 768px) {
+  body {
+    font-size: 18px;
+  }
+
+  .container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .contacts {
+    width: 100%;
+    padding: 1.5rem;
+    border-radius: 0;
+    border-bottom: 2px solid #555;
+    font-size: 1.1rem;
+  }
+
+  .contact {
+    padding: 16px;
+    gap: 10px;
+  }
+
+  .contact img {
+    width: 80px !important;
+    height: 80px !important;
+  }
+
+  .contact strong {
+    font-size: 1.4rem;
+  }
+
+  .chat-room {
+    width: 100%;
+    padding: 1.5rem;
+  }
+
+  .chat-header img {
+    width: 70px !important;
+    height: 70px !important;
+  }
+
+  .chat-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .messages {
+    font-size: 1.4rem;
+    padding: 1.4rem;
+    min-height: 300px;
+    max-height: 400px;
+  }
+
+  .message-content {
+    font-size: 1.4rem !important;
+    padding: 16px 20px;
+    border-radius: 24px;
+    line-height: 1.6;
+  }
+
+  .message-time {
+    font-size: 1.1rem;
+  }
+
+  .chat-input {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  textarea {
+    font-size: 1.3rem;
+    padding: 14px;
+  }
+
+  #sendBtn,
+  #uploadBtn,
+  #emojiBtn {
+    width: 100%;
+    font-size: 1.3rem;
+    padding: 14px;
+  }
+
+  .view-profile-btn {
+    font-size: 1.2rem;
+    padding: 12px;
+  }
+
+  .unread-count {
+    font-size: 1.2rem;
+    padding: 6px 10px;
+  }
+
+  .nav-right a,
+  .nav-right button {
+    font-size: 1.4rem;
+    padding: 12px;
+  }
+
+  nav {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  emoji-picker {
+    width: 100vw !important;
+    height: 360px !important;
+    bottom: 80px !important;
+    right: 10px !important;
+  }
+}
+
+
+</style>
+
+</head>
+
+<body>
+  
+<h1 style="display: none;">Home</h1>
+<nav>
+  <!-- LEFT SIDE: Logo -->
+  <div class="nav-left">
+    <a href="/" aria-label="Gossiply Home">
+      <i class="fa-solid fa-comments"></i> <strong style="font-size: 1.2rem;">Gossiply</strong>
+    </a>
+  </div>
+
+  <!-- RIGHT SIDE: Links -->
+  <div class="nav-right">
+    <a href="/home" aria-label="Home">
+      <i class="fa-solid fa-house"></i> Home
+    </a>
+
+    <a href="/profile" aria-label="Profile">
+      <i class="fa-solid fa-user"></i> Profile
+    </a>
+
+    <a href="/search" aria-label="Search">
+      <i class="fa-solid fa-magnifying-glass"></i> Search
+    </a>
+
+    <button id="darkModeToggle" aria-label="Toggle Dark Mode">
+      <i class="fa-solid fa-moon"></i> <span id="modeLabel">Dark Mode</span>
+    </button>
+
+    <a href="/logout" aria-label="Logout">
+      <i class="fa-solid fa-right-from-bracket"></i> Logout
+    </a>
+  </div>
+</nav>
+
+
+  <div class="container">
+  <div class="contacts">
+
+    <!-- ✅ Friend Requests Section (Static) -->
+    <div class="requests-section">
+      <% if (requests.length > 0) { %>
+        <h2>Friend Requests</h2>
+        <ul>
+          <% requests.forEach(request => { %>
+            <li>
+              <img src="<%= request.avatar || '/images/default-avatar.png' %>" width="30" />
+              <%= request.username %>
+              <form action="/accept-request/<%= request._id %>" method="POST" style="display:inline;">
+                <button type="submit">Accept</button>
+              </form>
+              <form action="/reject-request/<%= request._id %>" method="POST" style="display:inline;">
+                <button type="submit">Reject</button>
+              </form>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p style="color: #006127;">No friend requests</p>
+      <% } %>
+    </div>
+
+    <!-- ✅ Contacts Section (Dynamic Refresh) -->
+    <div class="contacts-section">
+  <div id="new-messages-list">
+    <% if (newMsgContacts.length > 0) { %>
+      <h2>New Messages</h2>
+      <ul>
+        <% newMsgContacts.forEach(contact => { %>
+          <li class="contact unread"
+              data-id="<%= contact._id %>"
+              data-username="<%= contact.username %>"
+              data-avatar="<%= contact.avatar || '/images/default-avatar.png' %>">
+            <img src="<%= contact.avatar || '/images/default-avatar.png' %>" width="40" height="40" />
+            <strong>
+              <%= contact.username %>
+              <span class="unread-count">(<%= unreadCounts[contact._id.toString()] %>)</span>
+            </strong>
+            <button class="view-profile-btn" data-userid="<%= contact._id %>">View Profile</button>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+  </div>
+
+  <div id="normal-contacts-list">
+    <% if (normalContacts.length > 0) { %>
+      <h2>Contacts</h2>
+      <ul>
+        <% normalContacts.forEach(contact => { %>
+          <li class="contact"
+              data-id="<%= contact._id %>"
+              data-username="<%= contact.username %>"
+              data-avatar="<%= contact.avatar || '/images/default-avatar.png' %>">
+            <img src="<%= contact.avatar || '/images/default-avatar.png' %>" width="40" height="40" />
+            <strong><%= contact.username %></strong>
+            <button class="view-profile-btn" data-userid="<%= contact._id %>">View Profile</button>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+  </div>
+</div>
+
+
+  </div>
+
+    <div class="chat-room" id="chat-room">
+  <div class="emoji-float-bg"></div>
+  <div class="chat-placeholder">
+    <h2>💬 Start a Chat</h2>
+    <p>Select a contact to begin chatting...</p>
+  </div>
+</div>
+
+
+  </div>
+
+  <script>
+  const toggleBtn = document.getElementById('darkModeToggle');
+  const body = document.body;
+
+  const emojis = [
+    '💬', '😄', '😂', '😉', '😊', '😎', '🙌', '🥳', '🤩', '🎉',
+    '👍', '🙈', '😜', '😇', '😻', '🌈', '✨', '🌟', '💥', '🔥',
+    '💖', '💫', '😈', '👀', '💭', '🙃', '😅', '😆', '🌀', '🔆'
+  ];
+
+  const emojiContainer = document.querySelector('.emoji-float-bg');
+  for (let i = 0; i < 35; i++) {
+    const emoji = document.createElement('div');
+    emoji.classList.add('emoji-float');
+    emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+    emoji.style.left = Math.random() * 100 + 'vw';
+    emoji.style.animationDuration = (4 + Math.random() * 3).toFixed(2) + 's';
+    emoji.style.animationDelay = (Math.random() * 5).toFixed(2) + 's';
+    emoji.style.fontSize = (1.2 + Math.random() * 1.5).toFixed(2) + 'rem';
+    emojiContainer.appendChild(emoji);
+  }
+
+  if (localStorage.getItem('darkMode') === 'enabled') {
+    body.classList.add('dark-mode');
+    toggleBtn.textContent = '☀ Light Mode';
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+    if (body.classList.contains('dark-mode')) {
+      localStorage.setItem('darkMode', 'enabled');
+      toggleBtn.textContent = '☀ Light Mode';
+    } else {
+      localStorage.setItem('darkMode', 'disabled');
+      toggleBtn.textContent = '🌙 Dark Mode';
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const socket = io();
+
+    const currentUserId = "<%= user._id %>";
+    const currentUserAvatar = "<%= user.avatar || '/images/default-avatar.png' %>";
+
+    let currentConversationId = null;
+    let currentFriendId = null;
+
+    const chatRoom = document.getElementById('chat-room');
+    const contacts = document.querySelectorAll('.contact');
+    const conversationToFriendMap = {};
+
+    function scrollMessagesToBottom() {
+      const messagesDiv = document.getElementById('messages');
+      if (messagesDiv) messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    function insertAtCursor(input, textToInsert) {
+      const start = input.selectionStart;
+      const end = input.selectionEnd;
+      input.value = input.value.slice(0, start) + textToInsert + input.value.slice(end);
+      input.selectionStart = input.selectionEnd = start + textToInsert.length;
+    }
+
+    function setupEmojiPickerHandlers() {
+      const emojiPicker = document.getElementById('emojiPicker');
+      const emojiBtn = document.getElementById('emojiBtn');
+      const input = document.getElementById('messageInput');
+      const sendBtn = document.getElementById('sendBtn');
+      if (!emojiPicker || !emojiBtn || !input || !sendBtn) return;
+
+      emojiBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        emojiPicker.style.display = emojiPicker.style.display === 'block' ? 'none' : 'block';
+      });
+
+      emojiPicker.addEventListener('emoji-click', event => {
+        const emoji = event.detail.unicode;
+        insertAtCursor(input, emoji);
+        sendBtn.disabled = !input.value.trim();
+        setTimeout(() => input.focus(), 10);
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!emojiPicker.contains(event.target) && event.target !== emojiBtn) {
+          emojiPicker.style.display = 'none';
+        }
+      });
+      
+    }
+
+document.querySelector('.contacts').addEventListener('click', async (e) => {
+  const contact = e.target.closest('.contact');
+  if (!contact || e.target.classList.contains('view-profile-btn')) return;
+
+  const selectedFriendId = contact.dataset.id;
+  const friendUsername = contact.dataset.username;
+  const friendAvatar = contact.dataset.avatar;
+
+  if (selectedFriendId === currentFriendId) return; // Skip reloading same contact
+
+  currentFriendId = selectedFriendId;
+  contact.classList.remove('unread');
+
+  try {
+    const res = await fetch(`/chat/conversation/${currentFriendId}`);
+    const conversation = res.ok ? await res.json() : { messages: [], _id: null };
+
+    currentConversationId = conversation._id ? String(conversation._id) : null;
+
+    if (currentConversationId) {
+      conversationToFriendMap[currentConversationId] = currentFriendId;
+
+      socket.emit('joinRoom', {
+        conversationId: currentConversationId,
+        userId: currentUserId,
+        friendId: currentFriendId
+      });
+
+      socket.emit('markAsRead', {
+        conversationId: currentConversationId,
+        userId: currentUserId
+      });
+    }
+
+    renderChat(conversation, friendUsername, friendAvatar);
+  } catch (err) {
+    console.error('Failed to fetch conversation:', err);
+    renderChat({ messages: [], _id: null }, friendUsername, friendAvatar);
+  }
+});
+
+
+    function renderChat(conversation, friendName, friendAvatar) {
+      chatRoom.innerHTML = `
+        <div class="chat-header" style="display:flex; align-items:center; gap:10px; margin-bottom:1rem;">
+          <img src="${friendAvatar}" width="40" style="border-radius:50%;" alt="Friend Avatar" />
+          <h2>Chat with ${friendName}</h2>
+        </div>
+        <div class="messages" id="messages"></div>
+        <div class="chat-input" style="position: relative;">
+          <textarea id="messageInput" rows="2" placeholder="Type a message..."></textarea>
+          <button id="emojiBtn" type="button" title="Emoji picker">&#128515;</button>
+          <emoji-picker 
+            id="emojiPicker" 
+            style="position: fixed; bottom: 60px; right: 60px; display: none; z-index: 9999; width: 320px; height: 300px; box-shadow: 0 4px 8px rgba(0,0,0,0.15); border-radius: 8px; background: white;">
+          </emoji-picker>
+          <input type="file" id="fileInput" style="display:none" />
+          <label for="fileInput" id="uploadBtn" title="Upload file" style="cursor: pointer;">📎</label>
+          <button id="sendBtn" disabled>Send</button>
+        </div>
+      `;
+
+      const messagesDiv = document.getElementById('messages');
+      const input = document.getElementById('messageInput');
+      const sendBtn = document.getElementById('sendBtn');
+
+      messagesDiv.innerHTML = '';
+      conversation.messages.forEach(addMessage);
+      scrollMessagesToBottom();
+
+      input.addEventListener('input', () => {
+        sendBtn.disabled = !input.value.trim();
+      });
+
+      sendBtn.onclick = () => {
+        const text = input.value.trim();
+        if (!text) return;
+
+        const localMessage = {
+          senderId: currentUserId,
+          text,
+          timestamp: new Date().toISOString()
+        };
+        addMessage(localMessage);
+        scrollMessagesToBottom();
+
+        socket.emit('chatMessage', {
+          conversationId: currentConversationId,
+          senderId: currentUserId,
+          text
+        });
+
+        input.value = '';
+        sendBtn.disabled = true;
+      };
+
+      setupEmojiPickerHandlers();
+
+      const fileInput = document.getElementById('fileInput');
+      const uploadBtn = document.getElementById('uploadBtn');
+
+      uploadBtn.addEventListener('click', () => {
+        fileInput.click();
+      });
+
+      fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = () => {
+          socket.emit('chatFile', {
+            conversationId: currentConversationId,
+            senderId: currentUserId,
+            fileName: file.name,
+            fileType: file.type,
+            fileData: reader.result
+          });
+
+          addMessage({
+            senderId: currentUserId,
+            text: `[File] ${file.name}`,
+            timestamp: new Date().toISOString()
+          });
+          scrollMessagesToBottom();
+        };
+        reader.readAsDataURL(file);
+        fileInput.value = '';
+      });
+    }
+
+    socket.on('newMessage', (msg) => {
+      const convIdStr = String(msg.conversationId);
+      const currentConvStr = String(currentConversationId);
+
+      if (convIdStr === currentConvStr) {
+        if (msg.senderId !== currentUserId) {
+          addMessage(msg);
+          scrollMessagesToBottom();
+        }
+      } else if (msg.senderId !== currentUserId) {
+        const friendId = conversationToFriendMap[convIdStr];
+        const contactEl = document.querySelector(`.contact[data-id="${friendId}"]`);
+        if (contactEl) {
+          contactEl.classList.add('unread');
+          const contactsList = contactEl.parentElement;
+          if (contactsList) contactsList.prepend(contactEl);
+        }
+      }
+    });
+
+    function addMessage(message) {
+      const messagesDiv = document.getElementById('messages');
+      if (!messagesDiv) return;
+
+      const isMe = message.sender?._id === currentUserId || message.senderId === currentUserId;
+      const avatar = isMe
+        ? currentUserAvatar
+        : (document.querySelector(`.contact[data-id="${currentFriendId}"]`)?.dataset.avatar || '/images/default-avatar.png');
+
+      const time = new Date(message.timestamp || Date.now()).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+
+      const msgDiv = document.createElement('div');
+      msgDiv.classList.add('message', isMe ? 'me' : 'friend');
+      msgDiv.innerHTML = `
+        <img src="${avatar}" class="message-avatar" alt="Avatar" />
+        <div>
+          <div class="message-content">${escapeHtml(message.text)}</div>
+          <div class="message-time">${time}</div>
+        </div>
+      `;
+      messagesDiv.appendChild(msgDiv);
+    }
+
+    
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.view-profile-btn');
+  if (btn) {
+    e.stopPropagation();
+    const userId = btn.dataset.userid;
+    window.location.href = `/user/${userId}`;
+  }
+});
+
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+  });
+
+setInterval(async () => {
+  try {
+    const res = await fetch('/api/contacts');
+    const data = await res.json();
+
+    if (data.success) {
+      const newMessagesList = document.getElementById('new-messages-list');
+      const normalContactsList = document.getElementById('normal-contacts-list');
+
+      newMessagesList.innerHTML = '';
+      normalContactsList.innerHTML = '';
+
+      const newMsgContacts = data.contacts.filter(c => c.unreadCount > 0);
+      const normalContacts = data.contacts.filter(c => c.unreadCount === 0);
+
+      if (newMsgContacts.length > 0) {
+        const h2 = document.createElement('h2');
+        h2.textContent = 'New Messages';
+        const ul = document.createElement('ul');
+
+        newMsgContacts.forEach(contact => {
+          const li = document.createElement('li');
+          li.className = 'contact unread';
+          li.dataset.id = contact._id;
+          li.dataset.username = contact.username;
+          li.dataset.avatar = contact.avatar || '/images/default-avatar.png';
+
+          li.innerHTML = `
+            <img src="${contact.avatar || '/images/default-avatar.png'}" width="40" height="40" />
+            <strong>${contact.username} <span class="unread-count">(${contact.unreadCount})</span></strong>
+            <button class="view-profile-btn" data-userid="${contact._id}">View Profile</button>
+          `;
+          ul.appendChild(li);
+        });
+
+        newMessagesList.appendChild(h2);
+        newMessagesList.appendChild(ul);
+      }
+
+      if (normalContacts.length > 0) {
+        const h2 = document.createElement('h2');
+        h2.textContent = 'Contacts';
+        const ul = document.createElement('ul');
+
+        normalContacts.forEach(contact => {
+          const li = document.createElement('li');
+          li.className = 'contact';
+          li.dataset.id = contact._id;
+          li.dataset.username = contact.username;
+          li.dataset.avatar = contact.avatar || '/images/default-avatar.png';
+
+          li.innerHTML = `
+            <img src="${contact.avatar || '/images/default-avatar.png'}" width="40" height="40" />
+            <strong>${contact.username}</strong>
+            <button class="view-profile-btn" data-userid="${contact._id}">View Profile</button>
+          `;
+          ul.appendChild(li);
+        });
+
+        normalContactsList.appendChild(h2);
+        normalContactsList.appendChild(ul);
+      }
+
+      document.querySelectorAll('.view-profile-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const userId = btn.dataset.userid;
+          window.location.href = `/user/${userId}`;
+        });
+      });
+    }
+  } catch (err) {
+    console.error('Failed to refresh contacts:', err);
+  }
+}, 2000);
+</script>
+
+
+</body>
+</html>
+
+
+
+================================================================================================
+===============================================================================================

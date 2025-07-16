@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Signup - Gossiply</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      background-color: #111827;
+    }
+
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url("/chat-bg.jpg") no-repeat center center/cover;
+      z-index: -3;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top right, rgba(17, 24, 39, 0.85), rgba(0, 0, 0, 0.4));
+      z-index: -2;
+    }
+
+    .form-container {
+      position: relative;
+      z-index: 2;
+      max-width: 400px;
+      width: 90%;
+      background: rgba(17, 24, 39, 0.6);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      padding: 40px 30px;
+      margin: auto;
+      top: 50%;
+      transform: translateY(-50%);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      color: white;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 2rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 14px;
+      margin-bottom: 20px;
+      border: 1.5px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #ffcc00;
+      box-shadow: 0 0 5px #ffcc00;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background-color: #ffcc00;
+      border: none;
+      border-radius: 6px;
+      color: #000;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #ffc107;
+    }
+
+    p {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    p a {
+      color: #ffcc00;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    p a:hover {
+      text-decoration: underline;
+    }
+
+    nav {
+      position: absolute;
+      top: 20px;
+      left: 30px;
+      z-index: 3;
+    }
+
+    nav button {
+      padding: 10px 18px;
+      background-color: rgba(255, 255, 255, 0.15);
+      border: 1px solid #ffffffb0;
+      color: white;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    nav button:hover {
+      background-color: rgba(255, 204, 0, 0.25);
+      transform: scale(1.05);
+    }
+
+    .emoji {
+      position: absolute;
+      top: 100vh;
+      font-size: 1.5rem;
+      opacity: 0.8;
+      z-index: 0;
+      animation-name: floatUp;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      pointer-events: none;
+    }
+
+    .form-container h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 2rem;
+  color: white;
+}
+
+.form-container label {
+  display: block;
+  margin: 10px 0 5px;
+  font-size: 0.95rem;
+  color: #ddd;
+}
+
+.form-container input {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #fefefe;
+  color: #111;
+}
+
+.form-container input:focus {
+  outline: none;
+  border-color: #ffcc00;
+  box-shadow: 0 0 5px #ffcc00;
+}
+
+.form-container .btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 12px 15px;
+  border-radius: 6px;
+  font-weight: 500;
+  text-decoration: none;
+  margin-bottom: 18px;
+  transition: background 0.3s;
+}
+
+.form-container .btn-google img {
+  width: 20px;
+  margin-right: 10px;
+}
+
+.form-container .btn-google:hover {
+  background-color: #f1f1f1;
+}
+
+.form-container button {
+  width: 100%;
+  padding: 14px;
+  background-color: #ffcc00;
+  border: none;
+  border-radius: 6px;
+  color: #000;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-container button:hover {
+  background-color: #ffc107;
+}
+
+.btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #ffffff;
+  color: #444;
+  border: 1px solid #ccc;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.25s, box-shadow 0.25s;
+  cursor: pointer;
+}
+
+.btn-google:hover {
+  background-color: #f5f5f5;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-google img {
+  width: 20px;
+  height: 20px;
+}
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0);
+        opacity: 0;
+      }
+      30% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-120vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+<nav>
+    <button onclick="location.href='/home'">🏠 Home</button>
+  </nav>
+  <!-- Background Layers -->
+  <div class="background"></div>
+  <div class="overlay"></div>
+
+  <!-- Signup Form -->
+  <form action="/signup" method="POST" class="form-container" novalidate>
+  <h1>Create Account</h1>
+
+  <a href="/auth/google" class="btn-google" aria-label="Sign up with Google">
+    <img src="/public/google-icon.png" alt="Google Icon" />
+    <span>Sign up with Google</span>
+  </a>
+
+  <label for="username">Username</label>
+  <input type="text" id="username" name="username" placeholder="Enter username" required autocomplete="username" />
+
+  <label for="email">Email</label>
+  <input type="email" id="email" name="email" placeholder="Enter email" required autocomplete="email" />
+
+  <label for="password">Password</label>
+  <input type="password" id="password" name="password" placeholder="Enter password" required autocomplete="new-password" />
+
+  <button type="submit">Sign Up</button>
+
+  <p>Already have an account? <a href="/login">Login here</a></p>
+</form>
+
+
+
+  <!-- Floating Emojis -->
+  <script>
+    const emojis = [
+      '💬', '😄', '😂', '😉', '😊', '😎', '🙌', '🥳', '🤩', '🎉',
+      '👍', '🙈', '😜', '😇', '😻', '🌈', '✨', '🌟', '💥', '🔥',
+      '💖', '💫', '😈', '👀', '💭', '🙃', '😅', '😆', '🌀', '🔆'
+    ];
+    const total = 40;
+
+    for (let i = 0; i < total; i++) {
+      const emoji = document.createElement('div');
+      emoji.classList.add('emoji');
+      emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+      emoji.style.left = Math.random() * 100 + 'vw';
+      emoji.style.animationDuration = (3 + Math.random() * 2) + 's';
+      emoji.style.animationDelay = Math.random() * 3 + 's';
+      emoji.style.fontSize = (1 + Math.random() * 2) + 'rem';
+      document.body.appendChild(emoji);
+    }
+  </script>
+
+</body>
+</html>

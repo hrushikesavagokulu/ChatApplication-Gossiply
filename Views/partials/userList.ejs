@@ -1,0 +1,19 @@
+<% users.forEach(user => { %>
+  <li role="listitem">
+    <div>
+      <strong><%= user.username %></strong>
+      <small>(<%= user.email %>)</small>
+    </div>
+    <div>
+      <% if (user.isFriend) { %>
+        <span aria-label="Friend added" title="Friend Added">[Added]</span>
+      <% } else if (user.requested) { %>
+        <span aria-label="Request Sent" title="Requested">[Requested]</span>
+      <% } else { %>
+        <form class="add-friend-form" data-user-id="<%= user._id %>" method="POST">
+          <button type="submit" aria-label="Add friend <%= user.username %>">Add Friend</button>
+        </form>
+      <% } %>
+    </div>
+  </li>
+<% }) %>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title><%= friend.username %>'s Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap & Fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-light: #fff;
+      --bg-dark: #121212;
+      --text-light: #333;
+      --text-dark: #eee;
+      --primary-color: #3897f0;
+      --shadow-light: rgba(0, 0, 0, 0.1);
+      --shadow-dark: rgba(0, 0, 0, 0.8);
+      --border-light: #ddd;
+      --border-dark: #444;
+      --font-family: 'Inter', sans-serif;
+      --transition-speed: 0.3s;
+    }
+
+    * {
+      box-sizing: border-box;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-family);
+      background-color: var(--bg-light);
+      color: var(--text-light);
+    }
+
+    body.dark-mode {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    .profile-container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 25px;
+      background-color: var(--bg-light);
+      border-radius: 16px;
+      box-shadow: 0 12px 30px var(--shadow-light);
+    }
+
+    body.dark-mode .profile-container {
+      background: #1f1f1f;
+      box-shadow: 0 12px 30px var(--shadow-dark);
+    }
+
+    .profile-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 25px;
+      margin-bottom: 30px;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 20px;
+    }
+
+    body.dark-mode .profile-header {
+      border-color: var(--border-dark);
+    }
+
+    .profile-header img {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--border-light);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    body.dark-mode .profile-header img {
+      border-color: var(--border-dark);
+    }
+
+    .profile-info h1 {
+      margin: 0 0 10px;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+
+    .profile-info p {
+      margin: 5px 0;
+      font-size: 1.05rem;
+    }
+
+    .mutual-btn {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: var(--primary-color);
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .gallery-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .gallery-container img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
+    }
+
+    .gallery-container img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(56, 151, 240, 0.6);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 14px;
+      box-shadow: 0 0 35px rgba(56, 151, 240, 0.9);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: var(--primary-color);
+      font-size: 2rem;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .mutual-box {
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      padding: 25px;
+      border-radius: 16px;
+      width: 400px;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    body.dark-mode .mutual-box {
+      background-color: #1f1f1f;
+      color: var(--text-dark);
+    }
+
+    .mutual-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .mutual-item img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .dark-mode-toggle {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background-color: var(--primary-color);
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(56,151,240,0.6);
+      z-index: 10000;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold" href="/"><i class="fa-solid fa-comments me-2"></i>Gossiply</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/home"><i class="fa-solid fa-house me-1"></i>Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/profile"><i class="fa-solid fa-user me-1"></i>Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/search"><i class="fa-solid fa-magnifying-glass me-1"></i>Search</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout"><i class="fa-solid fa-right-from-bracket me-1"></i>Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Profile Container -->
+<div class="container my-4">
+  <div class="profile-container">
+    <% const avatar = friend.avatar || '/images/default-avatar.png'; %>
+    <div class="profile-header" onclick="openImageModal('<%= avatar %>')">
+      <img src="<%= avatar %>" alt="Avatar" />
+      <div class="profile-info">
+        <h1><%= friend.username %>'s Profile</h1>
+        <p><strong>Email:</strong> <%= friend.email %></p>
+        <p><strong>Bio:</strong> <%= friend.bio || 'No bio provided.' %></p>
+        <p><strong>About:</strong> <%= friend.about || 'No description available.' %></p>
+        <p><strong>Total Friends:</strong> <%= friend.friends ? friend.friends.length : 0 %></p>
+      </div>
+    </div>
+
+    <!-- Mutual Friends Button -->
+    <button id="showMutualBtn" class="mutual-btn">
+      <i class="fa-solid fa-users"></i> Show Mutual Friends (<%= mutualCount %>)
+    </button>
+
+    <!-- Photo Gallery -->
+    <!-- Photo Gallery -->
+<h2>Photo Posts</h2>
+<div class="row g-3">
+  <% if (friend.posts && friend.posts.length > 0) { %>
+    <% friend.posts.forEach((photo, index) => { %>
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="card shadow-sm border-0">
+          <img src="<%= photo %>" class="card-img-top rounded" alt="Photo" onclick="openImageModal('<%= photo %>')" style="height: 200px; object-fit: cover; cursor: pointer;">
+        </div>
+      </div>
+    <% }) %>
+  <% } else { %>
+    <p>This user hasn't uploaded any photos yet.</p>
+  <% } %>
+</div>
+
+</div>
+
+<!-- Image Modal -->
+<div id="imageModal" class="modal" onclick="closeImageModal()">
+  <span class="close-btn">&times;</span>
+  <img class="modal-content" id="modalImage">
+</div>
+
+<!-- Mutual Friends Modal -->
+<div id="mutualLightbox" class="modal">
+  <div class="mutual-box">
+    <span class="close-btn" onclick="closeMutualModal()">&times;</span>
+    <h2>Mutual Friends (<%= mutualCount %>)</h2>
+    <p><strong>Total Friends:</strong> <%= friend.friends ? friend.friends.length : 0 %></p>
+    <% if (mutualCount > 0) { %>
+      <ul class="list-unstyled">
+        <% mutualFriends.forEach(mf => { %>
+          <li class="mutual-item">
+            <img src="<%= mf.avatar || '/images/default-avatar.png' %>" alt="<%= mf.username %>" />
+            <span><%= mf.username %></span>
+          </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p>No mutual friends found.</p>
+    <% } %>
+  </div>
+</div>
+
+<!-- Dark Mode Toggle -->
+<button class="dark-mode-toggle" title="Toggle Dark Mode"><i class="fa-solid fa-moon"></i></button>
+
+<!-- Scripts -->
+<script>
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("modalImage");
+
+  function openImageModal(src) {
+    modal.style.display = "flex";
+    modalImg.src = src;
+  }
+
+  function closeImageModal() {
+    modal.style.display = "none";
+    modalImg.src = "";
+  }
+
+  function closeMutualModal() {
+    document.getElementById("mutualLightbox").style.display = "none";
+  }
+
+  document.getElementById("showMutualBtn").addEventListener("click", () => {
+    document.getElementById("mutualLightbox").style.display = "flex";
+  });
+
+  const toggleBtn = document.querySelector('.dark-mode-toggle');
+  toggleBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    toggleBtn.innerHTML = isDark
+      ? '<i class="fa-solid fa-sun"></i>'
+      : '<i class="fa-solid fa-moon"></i>';
+    localStorage.setItem('dark-mode', isDark ? 'enabled' : 'disabled');
+  });
+
+  if (localStorage.getItem('dark-mode') === 'enabled') {
+    document.body.classList.add('dark-mode');
+    toggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+  }
+</script>
+
+</body>
+</html>
